@@ -7,11 +7,6 @@ const ServicesContext = createContext();
 export const ServicesProvider = ({ children }) => {
   const [userList, setUserList] = useState();
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -60,8 +55,6 @@ export const ServicesProvider = ({ children }) => {
       await API.patch(`/funcionarios/${id}`, { usuario: null });
       await API.delete(`/funcionarios/${id}`);
       getUsers();
-
-      return true;
     } catch (error) {
       console.log(error);
     }
@@ -88,9 +81,6 @@ export const ServicesProvider = ({ children }) => {
         patchUser,
         handleClose,
         handleOpen,
-        anchorEl,
-        setAnchorEl,
-        handleClick,
         open,
         userList,
       }}

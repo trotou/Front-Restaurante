@@ -28,7 +28,7 @@ const UsersList = () => {
     <div>
       {userList &&
         userList.map((item, i) => (
-          <List className={classes.root} key={i}>
+          <List className={classes.root} key={item.idFuncionario}>
             <ListItem className={classes.item}>
               <ListItemAvatar>
                 <Avatar alt={`Avatar n°${i}`} />
