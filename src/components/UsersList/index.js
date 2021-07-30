@@ -34,7 +34,7 @@ const UsersList = () => {
                 <Avatar alt={`Avatar n°${i}`} />
               </ListItemAvatar>
 
-              {item.cargo === "Atendente" || item.cargo === "Entregador" ? (
+              {item.registrado ? (
                 <IconButton style={{ margin: "0 -0.5% 0 -1%" }}>
                   <span className="material-icons">&#xe324;</span>
                 </IconButton>

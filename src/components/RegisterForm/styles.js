@@ -23,3 +23,9 @@ export const P3 = styled.p`
   text-align: center;
   margin-bottom: 0;
 `;
+
+export const PmsgError = styled.p`
+  text-align: center;
+  color: red;
+  font-size: small;
+`;

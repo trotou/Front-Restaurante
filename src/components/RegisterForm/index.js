@@ -15,13 +15,14 @@ import {
   userRegisterAppSchema,
   userRegisterSchema,
 } from "../../Schemas/schemas";
-import { P1, P2, P3 } from "./styles";
+import { PmsgError, P1, P2, P3 } from "./styles";
 import { StyledButton, StyledInput, useStyles } from "../../Helpers/styles";
 
 const RegisterForm = () => {
   const classes = useStyles();
-  const [value, setValue] = useState("Caixa");
+  const [value, setValue] = useState("");
   const [state, setState] = useState(false);
+  const [error, setError] = useState(false);
   const { registerForm, handleClose } = useServices();
 
   const handleSwitch = () => {
@@ -44,9 +45,15 @@ const RegisterForm = () => {
         : yupResolver(userRegisterSchema),
   });
 
-  const handleForm = (data) => {
-    if (value !== "Atendente" && value !== "Entregador") {
+  const clear = () => {
+    reset();
+    handleClose();
+  };
+
+  const handleForm = async (data) => {
+    if (!data["password"]) {
       data["password"] = "";
+      data["registrado"] = false;
     }
     if (!data["salario"]) {
       data["salario"] = 0;
@@ -54,9 +61,8 @@ const RegisterForm = () => {
     data["online"] = state;
     data["cargo"] = value;
 
-    registerForm(data);
-    reset();
-    handleClose();
+    const registered = await registerForm(data);
+    registered ? clear() : setError(true);
   };
 
   return (
@@ -67,7 +73,7 @@ const RegisterForm = () => {
       <FormControl variant="filled">
         <InputLabel>Cargo</InputLabel>
         <Select
-          value={value || "Caixa"}
+          value={value}
           onChange={handleChange}
           label="Cargo"
           className={classes.hideIconPadding}
@@ -144,6 +150,7 @@ const RegisterForm = () => {
             error={!!errors.username}
             helperText={errors.username?.message}
           />
+          {error && <PmsgError>Email já cadastrado</PmsgError>}
 
           <StyledInput
             name="password"

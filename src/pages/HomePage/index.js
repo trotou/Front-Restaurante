@@ -1,15 +1,9 @@
 import { Card, Typography } from "@material-ui/core";
-import { useEffect } from "react";
 import TemporaryDrawer from "../../components/SideBar";
 import UsersList from "../../components/UsersList";
-import { useServices } from "../../Providers/Services";
 import { DivHome } from "./styles";
 
 const HomePage = () => {
-  const { userList } = useServices();
-
-  useEffect(() => {}, [userList]);
-
   return (
     <DivHome>
       <Card
