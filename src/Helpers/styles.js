@@ -42,6 +42,9 @@ export const StyledButtonHome = withStyles({
     height: 48,
     fontSize: "50%",
     margin: "1% 0 1% 0",
+    "&:hover": {
+      backgroundColor: "purple",
+    },
   },
 })(Button);
 
@@ -57,6 +60,9 @@ export const StyledButton = withStyles({
     position: "absolute",
     width: "92%",
     top: "85%",
+    "&:hover": {
+      backgroundColor: "purple",
+    },
   },
 })(Button);
 
