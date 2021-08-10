@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const P1 = styled.p`
   margin-top: 1%;

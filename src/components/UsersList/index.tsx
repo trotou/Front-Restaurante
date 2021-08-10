@@ -9,25 +9,29 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Typography,
-} from "@material-ui/core";
-import { useEffect } from "react";
-import { useServices } from "../../Providers/Services";
-import IOSSwitch from "../IosSwitch";
-import SimpleMenu from "../MenuUser";
-import { userListStyles } from "../../Helpers/styles";
+} from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import IOSSwitch from '../IosSwitch';
+import SimpleMenu from '../MenuUser';
+import { userListStyles } from '../../Helpers/styles';
+import { RootState } from '../../Store/store';
+import { getUsers, patchUser } from '../../Store/slices/servicesSlicer';
 
 const UsersList = () => {
   const classes = userListStyles();
-  const { getUsers, userList, patchUser } = useServices();
+  const dispatch = useDispatch();
+  const userList = useSelector((state: RootState) => state.service.userList);
+  const update = useSelector((state: RootState) => state.service.update);
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    dispatch(getUsers());
+  }, [update]);
 
   return (
     <div>
       {userList &&
-        userList.map((item, i) => (
+        userList.map((item: any, i: number) => (
           <List className={classes.root} key={item.idFuncionario}>
             <ListItem className={classes.item}>
               <ListItemAvatar>
@@ -35,7 +39,7 @@ const UsersList = () => {
               </ListItemAvatar>
 
               {item.registrado ? (
-                <IconButton style={{ margin: "0 -0.5% 0 -1%" }}>
+                <IconButton style={{ margin: '0 -0.5% 0 -1%' }}>
                   <span className="material-icons">&#xe324;</span>
                 </IconButton>
               ) : null}
@@ -47,7 +51,7 @@ const UsersList = () => {
                       ? { badge: classes.customBadgeOn }
                       : { badge: classes.customBadgeOff }
                   }
-                  badgeContent={""}
+                  badgeContent=""
                   variant="dot"
                 >
                   <Typography>{item.nome}</Typography>
@@ -63,15 +67,20 @@ const UsersList = () => {
                     <IOSSwitch
                       checked={item.online}
                       onChange={() => {
-                        patchUser(item.idFuncionario, { online: !item.online });
+                        dispatch(
+                          patchUser({
+                            id: item.idFuncionario,
+                            data: item.online,
+                          })
+                        );
                       }}
                     />
                   }
                   label={
                     item.online ? (
-                      <p style={{ color: "#838180" }}>Online</p>
+                      <p style={{ color: '#838180' }}>Online</p>
                     ) : (
-                      <p style={{ color: "#838180" }}>Offline</p>
+                      <p style={{ color: '#838180' }}>Offline</p>
                     )
                   }
                 />
@@ -80,8 +89,8 @@ const UsersList = () => {
                   disableFocusRipple
                   disableRipple
                   style={{
-                    backgroundColor: "transparent",
-                    paddingBottom: "5%",
+                    backgroundColor: 'transparent',
+                    paddingBottom: '5%',
                   }}
                 >
                   <SimpleMenu id={item.idFuncionario} />
